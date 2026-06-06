@@ -1,0 +1,15 @@
+[
+  {
+    "id": "rev_001",
+    "original_plan_id": "sem_001",
+    "new_plan_id": "",
+    "title": "调整一元二次方程单元课时",
+    "reason": "学生基础较弱，需要增加2课时巩固练习",
+    "applicant_id": "tch_001",
+    "status": "pending",
+    "approver_id": "",
+    "approval_note": "",
+    "created_at": "2025-09-20T10:00:00Z",
+    "approved_at": null
+  }
+]
