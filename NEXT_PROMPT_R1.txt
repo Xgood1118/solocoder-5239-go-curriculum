@@ -1,0 +1,9 @@
+后端 Go 代码根本起不来，`go build ./cmd/server` 编译直接挂掉，三个 `declared and not used` 报错全部集中在 `backend/internal/service/curriculum.go`：
+
+- L106 附近的 `sem` 声明了（从 `svc.store.GetSemester(classPlan.SemesterID)` 拿的）但函数体里完全没用到
+- L165 附近的 `totalKP` 算出来了，下面却没引用
+- L394 附近的 `lastCompletedWeek` 在 `GenerateGanttData` 的循环里赋值后没消费
+
+Go 编译器不认 `_ =` 之外的"先放着以后用"那种省略，所以 service 包直接 build 失败，连带 `go vet ./...` 也跑不通。后端 8139 端口根本没起来，所有 `/api/...` 接口都没法用。前端 `npm run build` 能过、产物落到 `dist/`，但 `vite build` 阶段还在 `src/pages/Compare.jsx:69` 报 `[plugin:vite:esbuild] Duplicate "style" attribute in JSX element`——同一个 div 上写了两个 `style={{...}}`，只保留合并的那一个就行。
+
+业务侧没机会验：3-5 个显性需求里的"学期/单元/课时三级 CRUD"、"知识点拓扑排序 + 环检测"、"智能建议课时"、"进度登记 + 偏差 + 覆盖率"、"甘特图 + 班级对比"、"修订申请流程"全卡在后端编译这一步，整个 SPA 调不到接口，登录后的页面大概率白屏。检查修复一下。
