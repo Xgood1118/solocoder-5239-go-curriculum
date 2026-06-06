@@ -452,5 +452,16 @@
     "teacher_id": "tch_004",
     "is_substitute": false,
     "created_at": "2025-10-08T09:00:00Z"
+  },
+  {
+    "id": "rec_1780765264615735300",
+    "class_plan_id": "cp_001",
+    "lesson_id": "lesson_001",
+    "record_type": "normal",
+    "actual_week": 1,
+    "actual_date": "2026-06-07T01:01:04.6157353+08:00",
+    "teacher_id": "tch_001",
+    "is_substitute": false,
+    "created_at": "2026-06-07T01:01:04.6157353+08:00"
   }
 ]

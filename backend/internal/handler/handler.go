@@ -143,7 +143,7 @@ func (h *Handler) ListClassPlans(c *gin.Context) {
 }
 
 func (h *Handler) GetClassPlan(c *gin.Context) {
-	id := c.Param("id")
+	id := c.Param("classPlanId")
 	plan, err := h.store.GetClassPlan(id)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
@@ -166,7 +166,7 @@ func (h *Handler) CreateClassPlan(c *gin.Context) {
 }
 
 func (h *Handler) UpdateClassPlan(c *gin.Context) {
-	id := c.Param("id")
+	id := c.Param("classPlanId")
 	var plan model.ClassPlan
 	if err := c.ShouldBindJSON(&plan); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -181,7 +181,7 @@ func (h *Handler) UpdateClassPlan(c *gin.Context) {
 }
 
 func (h *Handler) DeleteClassPlan(c *gin.Context) {
-	id := c.Param("id")
+	id := c.Param("classPlanId")
 	if err := h.store.DeleteClassPlan(id); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

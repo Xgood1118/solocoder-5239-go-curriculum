@@ -1,0 +1,9 @@
+backend/data/semesters.json 在 R2 被改坏了——从 700+ 行完整数据（5 个 unit、47 个 lesson、完整 knowledge_point_ids 映射）变成 16 行残壳，sem_001 的 name/grade/subject 三个字段的中文全部 mojibake（"2025-2026ѧ����һѧ��"、"��һ�꼶"、"��ѧ"），units 数组整个被删，created_at/created_by 字段被清空、updated_at 被覆盖。整个课程规划系统没有任何 unit 和 lesson 可用，学期→单元→课时三级结构断在最顶层。
+
+第一优先：先把 semesters.json 恢复到 R1 提交时的完整状态。运行 `git -C SoloCoder/5239-go-curriculum checkout HEAD -- backend/data/semesters.json` 把原始 seed data 拿回来，确认 5 个 unit（unit_001~unit_005）和所有 lesson 都在、中文 UTF-8 编码正常，不要再用任何工具重新序列化这个文件。
+
+第二优先：再确认 backend 编译能过、`go build ./cmd/server` 无报错、端口能起来。前端 SPA `npm run build` 也要确认能产出 dist。
+
+R1 提到的 curriculum.go 里 L106 的 `sem`、L165 的 `totalKP`、L394 附近的 `lastCompletedWeek` 这三个未用变量 —— R2 把它们删了，build 错误修好了，这个方向对的，但 R2 顺手改坏了 seed data 属于越界操作。R2 改代码时改坏了 data 是不允许的。
+
+R2 唯一允许的 data 改动是 progress_records.json 加的那条 rec_1780765264615735300，那条可以保留。

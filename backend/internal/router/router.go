@@ -38,9 +38,9 @@ func SetupRouter(h *handler.Handler) *gin.Engine {
 		{
 			semesters.GET("", h.ListSemesters)
 			semesters.POST("", h.CreateSemester)
-			semesters.GET("/:id", h.GetSemester)
-			semesters.PUT("/:id", h.UpdateSemester)
-			semesters.DELETE("/:id", h.DeleteSemester)
+			semesters.GET("/:semesterId", h.GetSemester)
+			semesters.PUT("/:semesterId", h.UpdateSemester)
+			semesters.DELETE("/:semesterId", h.DeleteSemester)
 
 			units := semesters.Group("/:semesterId/units")
 			{
@@ -82,9 +82,9 @@ func SetupRouter(h *handler.Handler) *gin.Engine {
 		{
 			classPlans.GET("", h.ListClassPlans)
 			classPlans.POST("", h.CreateClassPlan)
-			classPlans.GET("/:id", h.GetClassPlan)
-			classPlans.PUT("/:id", h.UpdateClassPlan)
-			classPlans.DELETE("/:id", h.DeleteClassPlan)
+			classPlans.GET("/:classPlanId", h.GetClassPlan)
+			classPlans.PUT("/:classPlanId", h.UpdateClassPlan)
+			classPlans.DELETE("/:classPlanId", h.DeleteClassPlan)
 
 			progress := classPlans.Group("/:classPlanId/progress")
 			{

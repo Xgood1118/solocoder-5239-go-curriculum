@@ -28,7 +28,7 @@ func (h *Handler) ListSemesters(c *gin.Context) {
 }
 
 func (h *Handler) GetSemester(c *gin.Context) {
-	id := c.Param("id")
+	id := c.Param("semesterId")
 	sem, err := h.store.GetSemester(id)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
@@ -51,7 +51,7 @@ func (h *Handler) CreateSemester(c *gin.Context) {
 }
 
 func (h *Handler) UpdateSemester(c *gin.Context) {
-	id := c.Param("id")
+	id := c.Param("semesterId")
 	var sem model.Semester
 	if err := c.ShouldBindJSON(&sem); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -66,7 +66,7 @@ func (h *Handler) UpdateSemester(c *gin.Context) {
 }
 
 func (h *Handler) DeleteSemester(c *gin.Context) {
-	id := c.Param("id")
+	id := c.Param("semesterId")
 	if err := h.store.DeleteSemester(id); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

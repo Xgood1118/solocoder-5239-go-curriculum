@@ -103,11 +103,6 @@ func (svc *CurriculumService) CalculateProgressSummary(classPlanID string) (*mod
 		return nil, err
 	}
 
-	sem, err := svc.store.GetSemester(classPlan.SemesterID)
-	if err != nil {
-		return nil, err
-	}
-
 	allLessons, err := svc.store.GetAllLessons(classPlan.SemesterID)
 	if err != nil {
 		return nil, err
@@ -162,7 +157,6 @@ func (svc *CurriculumService) CalculateProgressSummary(classPlanID string) (*mod
 		}
 	}
 
-	totalKP := len(kpMap)
 	var keyTotal, keyDone, diffTotal, diffDone, examTotal, examDone int
 
 	for kpID := range kpMap {
@@ -389,16 +383,6 @@ func (svc *CurriculumService) GenerateGanttData(classPlanID string) (*model.Gant
 		lastLesson := unit.Lessons[len(unit.Lessons)-1]
 		startWeek := firstLesson.PlanWeek
 		endWeek := lastLesson.PlanWeek
-
-		actualCompleted := 0
-		lastCompletedWeek := 0
-		for _, lesson := range unit.Lessons {
-			if completedMap[lesson.ID] {
-				actualCompleted++
-				lastCompletedWeek = lesson.PlanWeek
-			}
-		}
-		_ = actualCompleted
 
 		if startWeek == 0 {
 			startWeek = unit.OrderIndex
